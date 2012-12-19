@@ -1,0 +1,44 @@
+@mixin container {
+  margin-left: auto;
+  margin-right: auto;
+  width: 60rem;
+  clear: both; }
+
+@mixin grid($size) {
+  width: ($size * 2.50rem) + ($size * 1.25rem) - 1.25rem;
+  display: block;
+  float: left;
+  position: relative;
+  overflow: hidden; }
+
+@mixin prefix($size) {
+  padding-left: $size * 3.75rem; }
+
+@mixin suffix($size) {
+  padding-right: $size * 3.75rem; }
+
+@mixin push($size) {
+  left: $size * 3.75rem; }
+
+@mixin pull($size) {
+  left: -($size * 3.75rem); }
+
+$golden: 1.618;
+$g0: 1rem;
+
+$gn1: $g0 / $golden;
+$gn2: $gn1 / $golden;
+$gn3: $gn2 / $golden;
+$gn4: $gn3 / $golden;
+$gn5: $gn4 / $golden;
+
+$g1: $g0 * $golden;
+$g2: $g1 * $golden;
+$g3: $g2 * $golden;
+$g4: $g3 * $golden;
+$g5: $g4 * $golden;
+$g6: $g5 * $golden;
+$g7: $g6 * $golden;
+$g8: $g7 * $golden;
+$g9: $g8 * $golden;
+$g10: $g9 * $golden;

@@ -1,0 +1,12 @@
+@import "normalize";
+@import "grid";
+@import "columns";
+
+$bluezilla: #0085ab;
+$goldntron: #f0c202;
+$textual: #444;
+
+body{
+  background: #00b2e7;
+  color: $textual;
+}
