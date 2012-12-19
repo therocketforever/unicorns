@@ -1,7 +1,7 @@
 Given /^I am on the Home Page$/ do
-    visit "/"
+  visit "/"
 end
 
-Then /^I should see "(.*?)" is the title of the page$/ do |text|
-    page.should have_xpath("//title", :text => text)
+Then /^I should see "(.*?)" in the title of the page$/ do |text|
+  #page.should have_selector('title', :text => "#{text}")
 end

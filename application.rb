@@ -1,9 +1,10 @@
 class Application < Sinatra::Base
   
-  enable :logging
+  enable :logging, :inline_templates
 
   get "/" do
-    "Hello World from the / route!"
+    @title = "therocketforever"
+    haml :index
   end
 end
 
@@ -12,7 +13,7 @@ __END__
 @@layout
 !!! 5
 %head
-  %title = @title
+  %title #{@title}
   %link{:rel => 'stylesheet', :href => '/style.css'}
 %body
   = yield

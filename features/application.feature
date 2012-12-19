@@ -5,4 +5,4 @@ Feature: Application Integrity & Enviroment
 
   Scenario: Visit the Home Page
     Given I am on the Home Page
-    Then I should see "therocketforever" is the title of the page
+    Then I should see "therocketforever" in the title of the page
