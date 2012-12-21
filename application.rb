@@ -39,12 +39,22 @@ end
 class Article < DObject
   property :title, String
   property :body, Text
+
+  has n, :embeded_images, :through => Resource
+
+  def images
+    self.embeded_images
+  end
 end
 
 class Image < DObject
   property :title, String
   property :caption, Text
-  property :data, text
+  property :data, Text
+end
+
+class EmbededImage < Image
+  has n, :articles, :through => Resource
 end
 
 DataMapper.finalize.auto_migrate!
