@@ -34,6 +34,9 @@ class DObject
   property :id, Serial
   property :created_at, DateTime
   property :updated_at, DateTime
+  property :type, Discriminator
+  property :section, String, :lazy => true
+  property :tags, Object
 end
 
 class Article < DObject
