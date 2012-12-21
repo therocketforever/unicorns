@@ -1,25 +1,19 @@
-## Database Magic ##
-
-class DObject
-  include DataMapper::Resource
-  property :id, Serial
-end
-
-DataMapper.finalize
-
 ## Website ##
 class Application < Sinatra::Base
   
   enable :logging, :inline_templates
-  
+
   configure :test do
-  end
-  
-  configure :development do
     DataMapper.setup(:default, "sqlite://#{Dir.pwd}/development.db")
   end
-  
+ 
+  configure :development do
+    Bundler.require(:development)
+    DataMapper.setup(:default, "sqlite://#{Dir.pwd}/development.db")
+  end
+
   configure :production do
+    #ENV['DATABASE_URL'] || 
   end
 
   get "/style.css" do
@@ -33,6 +27,29 @@ class Application < Sinatra::Base
   end
 end
 
+## Database Magic ##
+
+class DObject
+  include DataMapper::Resource
+  property :id, Serial
+  property :created_at, DateTime
+  property :updated_at, DateTime
+end
+
+class Article < DObject
+  property :title, String
+  property :body, Text
+end
+
+class Image < DObject
+  property :title, String
+  property :caption, Text
+  property :data, text
+end
+
+DataMapper.finalize.auto_migrate!
+
+Binding.pry
 __END__
 
 ## Page Layouts ##
@@ -50,16 +67,25 @@ __END__
 @@_navigation
 
 @@index
-%p Hello from a Haml Template!!
+%p I am Index!!
 
-@@weblog
+@@command
+% I am @@command!!
 
-@@about
+@@operations
+%p I am @@operations!!
 
-@@portfolio
-
-@@contact
+@@science
+%p I am @@science!!
 
 @@_articles
+%p I am @@_articles!!
 
 @@_article
+%p I am @@_article!!
+
+@@_images
+%p I am @@_images!!
+
+@@_image
+%p I am @@_image!!
