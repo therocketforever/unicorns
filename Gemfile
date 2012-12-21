@@ -2,6 +2,7 @@ source :rubygems
 
 gem "sinatra", :require => "sinatra/base"
 gem "thin"
+gem "data_mapper", :require => "data_mapper"
 
 gem "haml", :require => "haml"
 gem "sass", :require => "sass"
@@ -16,7 +17,9 @@ end
 
 group :development do
   gem "pry", :require => "pry"
+  gem "dm-sqlite-adapter", :require => "dm-sqlite-adapter"
 end
 
 group :production do
+  gem "dm-postgres-adapter", :require => "dm-postgres-adapter"
 end
