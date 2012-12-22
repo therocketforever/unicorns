@@ -29,17 +29,27 @@ end
 
 ## Database Magic ##
 
+module Tag
+  include DataMapper::Resource
+  is :remixable
+
+  property :id, Serial
+  property :name, String
+end
+
 class DObject
   include DataMapper::Resource
+
   property :id, Serial
   property :created_at, DateTime
   property :updated_at, DateTime
   property :type, Discriminator
   property :section, String, :lazy => true
-  property :tags, Object
 end
 
 class Article < DObject
+  remix n, :tags
+  
   property :title, String
   property :body, Text
 
@@ -51,6 +61,8 @@ class Article < DObject
 end
 
 class Image < DObject
+  remix n, :tags
+  
   property :title, String
   property :caption, Text
   property :data, Text
