@@ -29,12 +29,12 @@ end
 
 ## Database Magic ##
 
-module Tag
+module Taggable
   include DataMapper::Resource
-  is :remixable
+  is :remixable, :suffix => "tag"
 
   property :id, Serial
-  property :name, String
+  #property :name, String
 end
 
 class DObject
@@ -48,7 +48,7 @@ class DObject
 end
 
 class Article < DObject
-  remix n, :tags
+  remix n, :taggables, :as => "tags"
   
   property :title, String
   property :body, Text
@@ -61,7 +61,7 @@ class Article < DObject
 end
 
 class Image < DObject
-  remix n, :tags
+  remix n, :taggables, :as => "tags"
   
   property :title, String
   property :caption, Text
@@ -69,6 +69,8 @@ class Image < DObject
 end
 
 class EmbededImage < Image
+  remix n, :taggables, :as => "tags"
+
   has n, :articles, :through => Resource
 end
 
