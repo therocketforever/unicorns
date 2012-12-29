@@ -43,10 +43,22 @@ end
 
 # Article opperational tasks & methods.
 module ActsAsArticle
+  def article?
+    return true
+  end
+  def image?
+    return false
+  end
 end
 
 # Image opperational tasks & methods.
 module ActsAsImage
+  def image?
+    return true
+  end
+  def article?
+    return false
+  end
 end
 
 # Agent should be the only non-worker that ever touches the DB. Agent is also responsable for DB maintenience tasks both system defined as well as rake-task based via the 'Agency' module.
