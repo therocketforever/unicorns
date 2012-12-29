@@ -27,6 +27,26 @@ class Application < Sinatra::Base
   end
 end
 
+
+## Opperational Objects ##
+
+module Agency
+end
+
+module Operations
+  # Process tags from markdown for insortion into DataBase. Tags should be assigned if they already exist & created if they do not. This should be done transactionaly as a redis worker task & return true or false on sucess/failure. 
+  def tag(target = self)
+    puts "Processing tags for #{target}"
+    return true
+  end 
+end
+
+class Agent
+  include Agency
+  def initialize
+  end
+end
+
 ## Database Magic ##
 
 module Taggable
@@ -34,12 +54,13 @@ module Taggable
   is :remixable, :suffix => "tag"
 
   property :id, Serial
-  #property :name, String
+  property :name, String
 end
 
 class DObject
   include DataMapper::Resource
-
+  include Operations
+  
   property :id, Serial
   property :created_at, DateTime
   property :updated_at, DateTime
@@ -116,3 +137,6 @@ __END__
 
 @@_image
 %p I am @@_image!!
+
+@@_tags
+%p I am @@_tags!!
