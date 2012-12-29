@@ -41,6 +41,15 @@ module Operations
   end 
 end
 
+# Article opperational tasks & methods.
+module ActsAsArticle
+end
+
+# Image opperational tasks & methods.
+module ActsAsImage
+end
+
+# Agent should be the only non-worker that ever touches the DB. Agent is also responsable for DB maintenience tasks both system defined as well as rake-task based via the 'Agency' module.
 class Agent
   include Agency
   def initialize
@@ -57,6 +66,7 @@ module Taggable
   property :name, String
 end
 
+# DObject is a common root object to be inherited from by all objects requireing persistance to the DB. DObject deffines common opperational tasks for the various model objects.
 class DObject
   include DataMapper::Resource
   include Operations
@@ -65,10 +75,12 @@ class DObject
   property :created_at, DateTime
   property :updated_at, DateTime
   property :type, Discriminator
+  #Section keyword should be implemented as either a Flag[] or Enum[] property with a default value of 'unsorted' or something to indicate its current status. A state machiene may be viable for tracking changes ond attacting hooks.
   property :section, String, :lazy => true
 end
 
 class Article < DObject
+  include ActsAsArticle
   remix n, :taggables, :as => "tags"
   
   property :title, String
@@ -82,6 +94,7 @@ class Article < DObject
 end
 
 class Image < DObject
+  include ActsAsImage
   remix n, :taggables, :as => "tags"
   
   property :title, String
@@ -90,6 +103,7 @@ class Image < DObject
 end
 
 class EmbededImage < Image
+  include ActsAsImage
   remix n, :taggables, :as => "tags"
 
   has n, :articles, :through => Resource
