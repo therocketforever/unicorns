@@ -65,7 +65,6 @@ end
 class Agent
   include Agency
   def initialize
-    return true
   end
 end
 
