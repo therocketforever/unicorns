@@ -90,12 +90,11 @@ class DObject
   #Section keyword should be implemented as either a Flag[] or Enum[] property with a default value of 'unsorted' or something to indicate its current status. A state machiene may be viable for tracking changes ond attacting hooks.
   property :section, String, :lazy => true
   
+  #before a DObject is saved its appropriate module is conditionaly included.
   before :save do
     if self.type == Article
-      puts 'I am an Article'
       self.class.send(:include, ActsAsArticle)
     elsif self.type == Image || EmbededImage
-      puts 'I am an Image'
       self.class.send(:include, ActsAsImage)
     end
   end
