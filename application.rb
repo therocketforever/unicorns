@@ -34,7 +34,7 @@ module Agency
 end
 
 module Operations
-  # Process tags from markdown for insortion into DataBase. Tags should be assigned if they already exist & created if they do not. This should be done transactionaly as a redis worker task & return true or false on sucess/failure. 
+  # Process tags from markdown for insortion into DataBase. Tags should be assigned if they already exist & created if they do not. This should be done transactionaly as a redis worker task & return true or false on sucess/failure.  
   def tag(target = self)
     puts "Processing tags for #{target}"
     return true
@@ -89,10 +89,21 @@ class DObject
   property :type, Discriminator
   #Section keyword should be implemented as either a Flag[] or Enum[] property with a default value of 'unsorted' or something to indicate its current status. A state machiene may be viable for tracking changes ond attacting hooks.
   property :section, String, :lazy => true
+  
+  def initialize
+    if self.type == Article
+      puts 'I am an Article'
+      self.class.send(:include, ActsAsArticle)
+    elsif self.type == Image || EmbededImage
+      puts 'I am an Image'
+      self.class.send(:include, ActsAsImage)
+    end
+  end
+  
 end
 
 class Article < DObject
-  include ActsAsArticle
+  #include ActsAsArticle
   remix n, :taggables, :as => "tags"
   
   property :title, String
@@ -106,7 +117,7 @@ class Article < DObject
 end
 
 class Image < DObject
-  include ActsAsImage
+  #include ActsAsImage
   remix n, :taggables, :as => "tags"
   
   property :title, String
@@ -115,7 +126,7 @@ class Image < DObject
 end
 
 class EmbededImage < Image
-  include ActsAsImage
+  #include ActsAsImage
   remix n, :taggables, :as => "tags"
 
   has n, :articles, :through => Resource
