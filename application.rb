@@ -4,7 +4,7 @@ class Application < Sinatra::Base
   enable :logging, :inline_templates
 
   configure :test do
-    DataMapper.setup(:default, "sqlite://#{Dir.pwd}/development.db")
+    DataMapper.setup(:default, "sqlite://#{Dir.pwd}/features/support/test.db")
   end
  
   configure :development do
@@ -65,6 +65,7 @@ end
 class Agent
   include Agency
   def initialize
+    return true
   end
 end
 
