@@ -1,8 +1,10 @@
+ENV['RACK_ENV'] = 'test'
+
 require 'bundler'
 
 Bundler.require(:default, :development, :test)
 
-ENV['RACK_ENV'] = 'test'
+#ENV['RACK_ENV'] = 'test'
 
 require File.join(File.dirname(__FILE__), '..', '..', 'application.rb')
 
