@@ -133,7 +133,7 @@ end
 
 DataMapper.finalize.auto_migrate!
 
-Binding.pry
+Binding.pry unless ENV['RACK_ENV'].to_sym == :test
 __END__
 
 ## Page Layouts ##
