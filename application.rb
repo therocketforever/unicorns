@@ -16,6 +16,21 @@ class Application < Sinatra::Base
     #ENV['DATABASE_URL'] || 
   end
 
+  helpers do
+    def evaluate_path
+     @target = case request.path
+        when '/red'
+          :_red
+        when '/blue'
+          :_blue
+        when '/gold'
+          :_gold
+        else
+          :_red
+      end
+    end
+  end
+
   get "/style.css" do
     content_type 'text/css', :charset => 'utf-8'
     scss :style
@@ -23,6 +38,7 @@ class Application < Sinatra::Base
 
   get "/" do
     @title = "therocketforever"
+    evaluate_path
     haml :index
   end
 end
@@ -152,15 +168,17 @@ __END__
 
 @@index
 %p I am Index!!
+.content 
+  = haml @target
 
-@@command
-% I am @@command!!
+@@_red
+%p I am @@_red!!
 
-@@operations
-%p I am @@operations!!
+@@_gold
+%p I am @@_gold!!
 
-@@science
-%p I am @@science!!
+@@-blue
+%p I am @@_blue!!
 
 @@_articles
 %p I am @@_articles!!
