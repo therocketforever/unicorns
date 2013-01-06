@@ -38,6 +38,7 @@ class Application < Sinatra::Base
 
   get "/" do
     @title = "therocketforever"
+    @articles = Article.all
     evaluate_path
     haml :index
   end
@@ -132,7 +133,7 @@ class Article < DObject
 end
 
 class Image < DObject
-  #include ActsAsImage
+  include ActsAsImage
   remix n, :taggables, :as => "tags"
   
   property :title, String
@@ -141,7 +142,7 @@ class Image < DObject
 end
 
 class EmbededImage < Image
-  #include ActsAsImage
+  include ActsAsImage
   remix n, :taggables, :as => "tags"
 
   has n, :articles, :through => Resource
@@ -173,6 +174,7 @@ __END__
 
 @@_red
 %p I am @@_red!!
+= haml :_articles
 
 @@_gold
 %p I am @@_gold!!
@@ -182,9 +184,14 @@ __END__
 
 @@_articles
 %p I am @@_articles!!
+- @articles.each do |article|
+  = haml :_article, :locals => {:article => article}
 
 @@_article
 %p I am @@_article!!
+%h3= article.title
+%article
+  = markdown(article.body)
 
 @@_images
 %p I am @@_images!!
