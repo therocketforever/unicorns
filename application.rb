@@ -13,7 +13,7 @@ class Application < Sinatra::Base
   end
 
   configure :production do
-    #ENV['DATABASE_URL'] || 
+    #ENV['DATABASE_URL'] || DataMapper.setup(:default, "sqlite://#{Dir.pwd}/development.db") 
   end
 
   helpers do
@@ -148,7 +148,7 @@ class EmbededImage < Image
   has n, :articles, :through => Resource
 end
 
-DataMapper.finalize.auto_migrate!
+DataMapper.finalize.auto_upgrade!
 
 Binding.pry unless ENV['RACK_ENV'].to_sym == :test
 __END__
@@ -184,13 +184,14 @@ __END__
 
 @@_articles
 %p I am @@_articles!!
-- @articles.each do |article|
-  = haml :_article, :locals => {:article => article}
+%section.articles
+  - @articles.each do |article|
+    = haml :_article, :locals => {:article => article}
 
 @@_article
-%p I am @@_article!!
-%h3= article.title
 %article
+  %p I am @@_article!!
+  %h3= article.title
   = markdown(article.body)
 
 @@_images
