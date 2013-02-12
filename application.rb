@@ -38,7 +38,7 @@ class Application < Sinatra::Base
 
   get "/" do
     @title = "therocketforever"
-    @articles = Article.all
+    @articles = Article.all :order => :weight.asc
     evaluate_path
     haml :index
   end
@@ -85,6 +85,52 @@ class Agent
   end
 end
 
+
+# Libraian indexes & manages content.
+class Librarian < Agent
+  def self.index
+    #puts "indexing articles..."
+    @index = []
+    Dir["./articles/*.md"].each do |f|
+      article = File.read(f).split("---\n")
+      meta = YAML::load(article[0])
+      @index.push({
+        :title => meta[:title],
+        :section => meta[:section],
+        :created_at =>  File.ctime(f),
+        :updated_at => File.mtime(f),
+        :tags => meta[:tags].split(', ').each { |t| t.to_sym}, 
+        :type => :article,
+        :weight => meta[:weight],
+        :body => article[1]
+      })
+    end 
+    return @index
+  end
+  
+  def self.encode(articles = Librarian.index)
+    articles.each do |a|
+      #article = Article.new
+      #article.created_at = a[:created_at]
+      #article.updated_at = a[:updated_at]
+      #article.type = a[:type]
+      #article.weight = a[:weight]
+      #article.body = a[:body]
+      #article.save
+      
+      Article.create(
+        :created_at => a[:created_at],
+        :updated_at => a[:updated_at],
+        #:tags => nil,
+        #:type => a[:type],
+        :weight => a[:weight],
+        :body => a[:body],
+      )
+      puts "encodeing item #{a[:title]}"
+    end
+  end
+end
+
 ## Database Magic ##
 
 module Taggable
@@ -123,6 +169,7 @@ class Article < DObject
   remix n, :taggables, :as => "tags"
   
   property :title, String
+  property :weight, Integer
   property :body, Text
 
   has n, :embeded_images, :through => Resource
