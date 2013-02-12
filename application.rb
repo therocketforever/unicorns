@@ -13,7 +13,7 @@ class Application < Sinatra::Base
   end
 
   configure :production do
-    #ENV['DATABASE_URL'] || DataMapper.setup(:default, "sqlite://#{Dir.pwd}/development.db") 
+    ENV['DATABASE_URL'] || DataMapper.setup(:default, "sqlite://#{Dir.pwd}/development.db") 
   end
 
   helpers do
