@@ -23,5 +23,6 @@ group :development do
 end
 
 group :production do
+  gem "pg", :require => "pg"
   gem "dm-postgres-adapter", :require => "dm-postgres-adapter"
 end
