@@ -197,7 +197,7 @@ end
 
 DataMapper.finalize.auto_upgrade!
 
-Binding.pry unless ENV['RACK_ENV'].to_sym == :test
+#Binding.pry unless ENV['RACK_ENV'].to_sym == :test
 __END__
 
 ## Page Layouts ##
