@@ -208,44 +208,50 @@ __END__
   %title #{@title}
   %link{:rel => 'stylesheet', :href => '/style.css'}
 %body
+  = haml :_header
+  = haml :_navigation
   = yield
 
 @@_header
+.header
+  -#%p I am @@_header!
 
 @@_navigation
+.navigation
+  -#%p I am @@_navigation!
 
 @@index
-%p I am Index!!
+-#%p I am Index!!
 .content 
   = haml @target
 
 @@_red
-%p I am @@_red!!
+-#%p I am @@_red!!
 = haml :_articles
 
 @@_gold
-%p I am @@_gold!!
+-#%p I am @@_gold!!
 
 @@-blue
-%p I am @@_blue!!
+-#%p I am @@_blue!!
 
 @@_articles
-%p I am @@_articles!!
+-#%p I am @@_articles!!
 %section.articles
   - @articles.each do |article|
     = haml :_article, :locals => {:article => article}
 
 @@_article
 %article
-  %p I am @@_article!!
+  -#%p I am @@_article!!
   %h3= article.title
   = markdown(article.body)
 
 @@_images
-%p I am @@_images!!
+-#%p I am @@_images!!
 
 @@_image
-%p I am @@_image!!
+-#%p I am @@_image!!
 
 @@_tags
-%p I am @@_tags!!
+-#%p I am @@_tags!!

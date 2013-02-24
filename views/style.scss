@@ -2,13 +2,31 @@
 @import "grid";
 @import "columns";
 
-$bluezilla: #0085ab;
+$bluezilla: #00b2e7;
 $goldntron: #f0c202;
 $textual: #444;
 
+
 body{
-  background: #00b2e7;
+  background: $bluezilla;
   color: $textual;
-  width: 80%;
-  margin: auto;
+  padding: $g0
+}
+
+@media screen and (max-device-width: 480px){
+    body{
+        -webkit-text-size-adjust: auto;
+        div{
+          clear: both !important;
+          display: block !important;
+          width: 100% !important;
+          float: none !important;
+          margin: 0 !important;
+          padding: 0 !important;
+        }
+        img{
+          max-width:100%;
+          height:auto;
+        }
+    }
 }
