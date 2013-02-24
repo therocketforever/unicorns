@@ -125,6 +125,7 @@ class Librarian < Agent
         #:type => a[:type],
         :weight => a[:weight],
         :body => a[:body],
+        :title => a[:title],
       )
       puts "encodeing item #{a[:title]}"
     end
@@ -205,20 +206,32 @@ __END__
 @@layout
 !!! 5
 %head
+  %meta{:content => "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no", :name => "viewport"}
   %title #{@title}
   %link{:rel => 'stylesheet', :href => '/style.css'}
 %body
   = haml :_header
-  = haml :_navigation
   = yield
+  = haml :_footer
 
 @@_header
 .header
   -#%p I am @@_header!
-
+  %h1.masthead
+    The
+    %br Rocket
+    Forever
+  = haml :_navigation
+  %hr
+  
 @@_navigation
 .navigation
   -#%p I am @@_navigation!
+  %p One Two Three Four
+
+@@_footer
+.footer
+  %p I am @@_footer!
 
 @@index
 -#%p I am Index!!
@@ -244,7 +257,7 @@ __END__
 @@_article
 %article
   -#%p I am @@_article!!
-  %h3= article.title
+  %h2.i_am_yellow= article.title
   = markdown(article.body)
 
 @@_images

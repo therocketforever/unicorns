@@ -4,14 +4,32 @@
 
 $bluezilla: #00b2e7;
 $goldntron: #f0c202;
+/*$goldntron: #e0b502;*/
 $textual: #444;
-
 
 body{
   background: $bluezilla;
   color: $textual;
-  padding: $g0
+  padding: $g0;
+  .header{
+    h1.masthead{
+      font-size: $g4;
+      line-height: ($g4 - $gn2);
+      padding: 0;
+      margin: 0;
+    } 
+  }
+  .i_am_yellow{
+    color: $goldntron;
+  }
 }
+
+hr{
+    color: $textual;
+    background-color: $textual;
+    border: 0;
+    height: $gn5;
+    }
 
 @media screen and (max-device-width: 480px){
     body{
@@ -27,6 +45,12 @@ body{
         img{
           max-width:100%;
           height:auto;
+        }
+        .header{
+          h1.masthead{
+            font-size: $g3;
+            line-height: ($g3 - $gn2);
+          }
         }
     }
 }
