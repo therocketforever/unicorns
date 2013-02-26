@@ -2,6 +2,8 @@
 class Application < Sinatra::Base
   
   enable :logging, :inline_templates
+  
+  register Barista::Integration::Sinatra
 
   configure :test do
     DataMapper.setup(:default, "sqlite://#{Dir.pwd}/features/support/test.db")
@@ -34,6 +36,10 @@ class Application < Sinatra::Base
   get "/style.css" do
     content_type 'text/css', :charset => 'utf-8'
     scss :style
+  end
+  
+  get '/application.js' do
+    coffee :application
   end
 
   get "/" do
@@ -206,6 +212,7 @@ __END__
 @@layout
 !!! 5
 %head
+  %script{:src => "/application.js", :type => "text/javascript"}
   %meta{:content => "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no", :name => "viewport"}
   %title #{@title}
   %link{:rel => 'stylesheet', :href => '/style.css'}

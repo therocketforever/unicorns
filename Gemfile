@@ -9,6 +9,7 @@ gem "dm-is-remixable", :require => "dm-is-remixable"
 gem "haml", :require => "haml"
 gem "sass", :require => "sass"
 gem "redcarpet", :require => "redcarpet"
+gem "barista", "~> 1.0", :require => "barista"
 
 group :test do
   gem "cucumber", :require => "cucumber"
