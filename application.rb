@@ -215,7 +215,7 @@ __END__
   = haml :_footer
 
 @@_header
-.header
+%header
   -#%p I am @@_header!
   %h1.masthead
     The
@@ -230,8 +230,10 @@ __END__
   %p One Two Three Four
 
 @@_footer
-.footer
-  %p I am @@_footer!
+%footer
+  -#%p I am @@_footer!
+  %small
+    %p &copy 2013 Gravity Network Services
 
 @@index
 -#%p I am Index!!
@@ -257,8 +259,10 @@ __END__
 @@_article
 %article
   -#%p I am @@_article!!
-  %h2.i_am_yellow= article.title
-  = markdown(article.body)
+  %section.article_title
+    %h2.i_am_yellow= article.title
+  %section.article_body
+    = markdown(article.body)
 
 @@_images
 -#%p I am @@_images!!
