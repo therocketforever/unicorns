@@ -38,7 +38,11 @@ class Application < Sinatra::Base
     scss :style
   end
   
-  get '/application.js' do
+  get "/core.js" do
+    coffee :core
+  end
+  
+  get "/application.js" do
     coffee :application
   end
 
@@ -212,8 +216,11 @@ __END__
 @@layout
 !!! 5
 %head
+  %script{:src => "http://cdn.lovely.io/core.js"}
+  -#%script{:src => "/core.js", :type => "text/javascript"}
   %script{:src => "/application.js", :type => "text/javascript"}
-  %meta{:content => "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no", :name => "viewport"}
+  -#%meta{:name => "viewport", :content => "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"}
+  %meta{:name => "viewport", :content => "width=device-width, user-scalable=no"}
   %title #{@title}
   %link{:rel => 'stylesheet', :href => '/style.css'}
 %body
