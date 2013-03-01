@@ -13,6 +13,7 @@ require File.join(File.dirname(__FILE__), 'application.rb')
 
 namespace :development do
   task :deploy do
+    Rake::Task["development:clean"].invoke
     Rake::Task["development:encode"].invoke
     #Rake::Task["development:article_encode"].invoke
     #Rake::Task["development:image_encode"].invoke
@@ -20,7 +21,13 @@ namespace :development do
   
   task :encode do
     puts "I am the Encoder!"
+    Rake::Task["development:articles_index"].invoke
     Librarian.encode
+  end
+  
+  task :clean do
+    puts "Removeing Previous Data..."
+    Article.all.destroy
   end
   
   task :articles_index do
