@@ -1,8 +1,8 @@
-ENV['RACK_ENV'] = 'development'
+#ENV['RACK_ENV'] = 'development'
 
 require 'bundler'
 
-Bundler.require(:default, :development)
+Bundler.require(:default, :production) #,:development
 
 require File.join(File.dirname(__FILE__), 'application.rb')
 
