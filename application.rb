@@ -31,6 +31,13 @@ class Application < Sinatra::Base
           :red
       end
     end
+    
+    def paginate(query)
+      @page     = (params[:page] || 1).to_i
+      @per_page = (params[:per_page] || 10).to_i
+
+      query[((@page - 1) * @per_page), @per_page]
+    end
   end
 
   get "/style.css" do
@@ -51,13 +58,13 @@ class Application < Sinatra::Base
     evaluate_path
 		case @target
 			when :red
-        @articles = Article.all :order => :weight.asc
+        @articles = paginate(Article.all :order => :weight.asc)
       when :blue
-        @articles = Article.all :order => :weight.desc
+        @articles = paginate(Article.all :order => :weight.desc)
       when :gold
-        @articles = Article.all :order => :title.asc
+        @articles = paginate(Article.all :order => :title.asc)
 			else
-			  @articles = Article.all :order => :weight.asc
+			  @articles = paginate(Article.all :order => :weight.asc)
 		end
     slim :index
   end
@@ -217,7 +224,7 @@ end
 
 DataMapper.finalize.auto_upgrade!
 
-#Binding.pry unless ENV['RACK_ENV'].to_sym == :test
+Binding.pry #unless ENV['RACK_ENV'].to_sym == :test || :production
 __END__
 
 ## Page Layouts ##
@@ -289,9 +296,9 @@ section.articles
 @@article
 article
 	section.article_title
-		h2.i_am_yellow = article.title
+		h2.i_am_yellow = article.title unless article.title.nil?
 	section.article_body
-		== markdown(article.body)
+		== markdown(article.body) unless article.body.nil?
 
 @@images
 // p I am @@_images!!
