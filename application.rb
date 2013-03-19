@@ -3,7 +3,7 @@ class Application < Sinatra::Base
   
   enable :logging, :inline_templates
   
-  register Barista::Integration::Sinatra
+	register Sinatra::MultiRoute
 
   configure :test do
     DataMapper.setup(:default, "sqlite://#{Dir.pwd}/features/support/test.db")
@@ -22,13 +22,13 @@ class Application < Sinatra::Base
     def evaluate_path
      @target = case request.path
         when '/red'
-          :_red
+          :red
         when '/blue'
-          :_blue
+          :blue
         when '/gold'
-          :_gold
+          :gold
         else
-          :_red
+          :red
       end
     end
   end
@@ -46,11 +46,20 @@ class Application < Sinatra::Base
     coffee :application
   end
 
-  get "/" do
+  get "/", "/red", "/blue", "/gold" do
     @title = "therocketforever"
-    @articles = Article.all :order => :weight.asc
     evaluate_path
-    haml :index
+		case @target
+			when :red
+        @articles = Article.all :order => :weight.asc
+      when :blue
+        @articles = Article.all :order => :weight.desc
+      when :gold
+        @articles = Article.all :order => :title.asc
+			else
+			  @articles = Article.all :order => :weight.asc
+		end
+    slim :index
   end
 end
 
@@ -214,83 +223,88 @@ __END__
 ## Page Layouts ##
 
 @@layout
-!!! 5
-%head
-  %script{:src => "http://cdn.lovely.io/core.js"}
-  -#%script{:src => "/core.js", :type => "text/javascript"}
-  %script{:src => "/application.js", :type => "text/javascript"}
-  %meta{:name => "viewport", :content => "width=device-width, user-scalable=no"}
-  %meta{ :content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type" }
-  %title #{@title}
-  %link{:rel => 'stylesheet', :href => '/style.css'}
-%body
-  = haml :_header
-  = yield
-  = haml :_footer
-  -#= haml :_analytics
+//  %script{:src => "http://cdn.lovely.io/core.js"}
+//  -#%script{:src => "/core.js", :type => "text/javascript"}
+//  %script{:src => "/application.js", :type => "text/javascript"}
+//  %meta{:name => "viewport", :content => "width=device-width, user-scalable=no"}
+//  %meta{ :content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type" }
+//  %title #{@title}
+//  %link{:rel => 'stylesheet', :href => '/style.css'}
 
-@@_header
-%header
-  -#%p I am @@_header!
-  %h1.masthead
-    The
-    %br Rocket
-    Forever
-  = haml :_navigation
-  %hr
+doctype html
+html
+	head
+		link rel="stylesheet" href="/style.css"
+	body
+		== slim :header
+		== yield
+		== slim :footer
+
+
+@@header
+header
+	h1.masthead 
+		| I Can Kill You
+		br 
+		| With My
+		br 
+		| Brain
+	== slim :navigation
+	hr
   
-@@_navigation
-.navigation
-  -#%p I am @@_navigation!
-  %p One Two Three Four
+@@navigation
+nav.navigation
+	ul.nav_links
+		li.nav_link
+			a.left.unicode href="/" ⬡
+		li.nav_link 
+			a.left.deja href="/blue" Noise
+		li.nav_link 
+			a.left.deja href="/gold" Contact
 
-@@_footer
-%footer
-  -#%p I am @@_footer!
-  %small
-    %p &copy 2013 Gravity Network Services
+@@footer
+footer
+	small
+		p &copy 2013 Gravity Network Services
+//  == slim :analytics
 
 @@index
--#%p I am Index!!
-.content 
-  = haml @target
+.content
+== slim @target
 
-@@_red
--#%p I am @@_red!!
-= haml :_articles
+@@red
+== slim :articles
 
-@@_gold
--#%p I am @@_gold!!
+@@gold
+== slim :articles
 
-@@-blue
--#%p I am @@_blue!!
+@@blue
+== slim :articles
 
-@@_articles
--#%p I am @@_articles!!
-%section.articles
-  - @articles.each do |article|
-    = haml :_article, :locals => {:article => article}
+@@articles
+section.articles
+	-@articles.each do |article|
+		== slim :article, locals: { article: article}
 
-@@_article
-%article
-  -#%p I am @@_article!!
-  %section.article_title
-    %h2.i_am_yellow= article.title
-  %section.article_body
-    = markdown(article.body)
+@@article
+article
+	section.article_title
+		h2.i_am_yellow = article.title
+	section.article_body
+		== markdown(article.body)
 
-@@_images
--#%p I am @@_images!!
+@@images
+// p I am @@_images!!
 
-@@_image
--#%p I am @@_image!!
+@@image
+// p I am @@_image!!
 
-@@_tags
--#%p I am @@_tags!!
+@@tags
+// p I am @@_tags!!
 
--#@@_analytics
--#%script
--#  var _gaq=[['_setAccount','UA-38958517-1'],['_trackPageview']];
--#  (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
--#    g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
--#    s.parentNode.insertBefore(g,s)}(document,'script'));
+//@@analytics
+//script
+//  | var _gaq=[['_setAccount','UA-38958517-1'],['_trackPageview']];
+//  | (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+//  | g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+//  | s.parentNode.insertBefore(g,s)}(document,'script'));
