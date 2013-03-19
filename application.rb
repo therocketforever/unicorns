@@ -166,7 +166,7 @@ module Taggable
   is :remixable, :suffix => "tag"
 
   property :id, Serial
-  property :name, String
+  property :name, Text
 end
 
 # DObject is a common root object to be inherited from by all objects requireing persistance to the DB. DObject deffines common opperational tasks for the various model objects.
@@ -179,7 +179,7 @@ class DObject
   property :updated_at, DateTime
   property :type, Discriminator
   #Section keyword should be implemented as either a Flag[] or Enum[] property with a default value of 'unsorted' or something to indicate its current status. A state machiene may be viable for tracking changes ond attacting hooks.
-  property :section, String, :lazy => true
+  property :section, Text, :lazy => true
   
   #before a DObject is saved its appropriate module is conditionaly included.
   before :save do
@@ -197,7 +197,7 @@ class Article < DObject
   remix n, :taggables, :as => "tags"
   
   property :title, Text
-  property :section, String
+  property :section, Text
   property :weight, Integer
   property :body, Text
 
@@ -212,7 +212,7 @@ class Image < DObject
   include ActsAsImage
   remix n, :taggables, :as => "tags"
   
-  property :title, String
+  property :title, Text
   property :caption, Text
   property :data, Text
 end
