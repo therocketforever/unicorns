@@ -13,6 +13,7 @@ require File.join(File.dirname(__FILE__), 'application.rb')
 
 namespace :development do
   task :deploy do
+    Bundler.require(:development)
     Rake::Task["development:clean"].invoke
     Rake::Task["development:encode"].invoke
     #Rake::Task["development:article_encode"].invoke

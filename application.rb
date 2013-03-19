@@ -58,13 +58,13 @@ class Application < Sinatra::Base
     evaluate_path
 		case @target
 			when :red
-        @articles = paginate(Article.all :order => :weight.asc)
+        @articles = paginate(Article.all(:section => "red", :order => :created_at.asc))
       when :blue
-        @articles = paginate(Article.all :order => :weight.desc)
+        @articles = paginate(Article.all(:section => "blue", :order => :updated_at.asc))
       when :gold
-        @articles = paginate(Article.all :order => :title.asc)
+        @articles = paginate(Article.all(:section => "gold", :order => :weight.asc))
 			else
-			  @articles = paginate(Article.all :order => :weight.asc)
+			  @articles = paginate(Article.all(:section => "red", :order => :created_at.asc))
 		end
     slim :index
   end
@@ -123,7 +123,7 @@ class Librarian < Agent
       @index.push({
         :title => meta[:title],
         :section => meta[:section],
-        :created_at =>  File.ctime(f),
+        :created_at => File.ctime(f),
         :updated_at => File.mtime(f),
         :tags => meta[:tags].split(', ').each { |t| t.to_sym}, 
         :type => :article,
@@ -149,9 +149,10 @@ class Librarian < Agent
         :updated_at => a[:updated_at],
         #:tags => nil,
         #:type => a[:type],
+        :title => a[:title],
+        :section => a[:section],
         :weight => a[:weight],
         :body => a[:body],
-        :title => a[:title],
       )
       puts "encodeing item #{a[:title]}"
     end
@@ -195,7 +196,8 @@ class Article < DObject
   #include ActsAsArticle
   remix n, :taggables, :as => "tags"
   
-  property :title, String
+  property :title, Text
+  property :section, String
   property :weight, Integer
   property :body, Text
 

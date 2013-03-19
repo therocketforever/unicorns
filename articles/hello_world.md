@@ -1,6 +1,6 @@
 :title: Hello 
 :section: red
-:tags: red, introduction, therocketforever, hello world
+:tags: red, introduction, therocketforever, helloworld
 :weight: 1
 ---
 

@@ -1,6 +1,6 @@
 :title: Be My BFF
 :section: gold
-:tags: red, contact, therocketforever
+:tags: gold, contact, therocketforever
 :weight: 20
 ---
 ### Contact information  
