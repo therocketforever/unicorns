@@ -7,11 +7,11 @@ if ENV['RACK_ENV'].nil? then ENV['RACK_ENV'] = "development" end
 case rack_env = ENV['RACK_ENV']
   when rack_env.to_sym == :production
     Bundler.require(:default, :production)
-  when rack_env == nil
+  when rack_env.to_sym == :development
     Bundler.require(:default, :development)
   when rack_env.to_sym == :test
     Bundler.require(:default, :development, :test)
-  else
+  when rack_env == nil
     Bundler.require(:default, :development)
 end
 
