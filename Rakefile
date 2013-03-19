@@ -2,7 +2,18 @@
 
 require 'bundler'
 
-Bundler.require(:default, :production) #,:development
+if ENV['RACK_ENV'].nil? then ENV['RACK_ENV'] = "development" end
+
+case rack_env = ENV['RACK_ENV']
+  when rack_env.to_sym == :production
+    Bundler.require(:default, :production)
+  when rack_env == nil
+    Bundler.require(:default, :development)
+  when rack_env.to_sym == :test
+    Bundler.require(:default, :development, :test)
+  else
+    Bundler.require(:default, :development)
+end
 
 require File.join(File.dirname(__FILE__), 'application.rb')
 
@@ -13,7 +24,6 @@ require File.join(File.dirname(__FILE__), 'application.rb')
 
 namespace :development do
   task :deploy do
-    Bundler.require(:development)
     Rake::Task["development:clean"].invoke
     Rake::Task["development:encode"].invoke
     #Rake::Task["development:article_encode"].invoke
