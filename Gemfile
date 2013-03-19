@@ -1,6 +1,6 @@
 source :rubygems
 
-ruby '1.9.3'
+ruby '2.0.0'
 
 gem "sinatra", :require => "sinatra/base"
 gem "thin"
@@ -9,6 +9,8 @@ gem "data_mapper", :require => "data_mapper"
 gem "dm-is-remixable", :require => "dm-is-remixable"
 
 gem "haml", :require => "haml"
+gem "slim"
+gem "coffee-script"
 gem "sass", :require => "sass"
 gem "redcarpet", :require => "redcarpet"
 gem "barista", "~> 1.0", :require => "barista"
