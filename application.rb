@@ -219,8 +219,8 @@ __END__
   %script{:src => "http://cdn.lovely.io/core.js"}
   -#%script{:src => "/core.js", :type => "text/javascript"}
   %script{:src => "/application.js", :type => "text/javascript"}
-  -#%meta{:name => "viewport", :content => "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"}
   %meta{:name => "viewport", :content => "width=device-width, user-scalable=no"}
+  %meta{ :content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type" }
   %title #{@title}
   %link{:rel => 'stylesheet', :href => '/style.css'}
 %body
