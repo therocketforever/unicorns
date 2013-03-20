@@ -12,7 +12,7 @@ case rack_env = ENV['RACK_ENV']
   when rack_env == nil
     Bundler.require(:default, :development)
   else
-    Bundler.require(:default, :production)
+    Bundler.require(:default, :development)
 end
 
 require File.join(File.dirname(__FILE__), 'application.rb')

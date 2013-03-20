@@ -134,27 +134,38 @@ class Librarian < Agent
     return @index
   end
   
+  def self.hexdigest(target)
+    Digest::SHA1.hexdigest(target)
+  end
+  
   def self.encode(articles = Librarian.index)
     articles.each do |a|
-      #article = Article.new
-      #article.created_at = a[:created_at]
-      #article.updated_at = a[:updated_at]
-      #article.type = a[:type]
-      #article.weight = a[:weight]
-      #article.body = a[:body]
-      #article.save
-      
-      Article.create(
-        :created_at => a[:created_at],
-        :updated_at => a[:updated_at],
-        #:tags => nil,
-        #:type => a[:type],
-        :title => a[:title],
-        :section => a[:section],
-        :weight => a[:weight],
-        :body => a[:body],
-      )
       puts "encodeing item #{a[:title]}"
+      
+      if article = Article.first(:fingerprint =>(Librarian.hexdigest([a[:title], a[:body]].to_s)))
+        article.update(
+          :updated_at => Time.now,
+          #:tags => nil,
+          #:type => a[:type],
+          :title => a[:title],
+          :section => a[:section],
+          :weight => a[:weight],
+          :body => a[:body],
+        )
+        puts "Updated #{article.fingerprint}"
+      else
+        Article.create(
+          :created_at => a[:created_at],
+          :updated_at => a[:updated_at],
+          #:tags => nil,
+          #:type => a[:type],
+          :title => a[:title],
+          :section => a[:section],
+          :weight => a[:weight],
+          :body => a[:body],
+        )
+        puts "Created #{Librarian.hexdigest([a[:title], a[:body]].to_s)}"
+      end
     end
   end
 end
@@ -181,6 +192,10 @@ class DObject
   #Section keyword should be implemented as either a Flag[] or Enum[] property with a default value of 'unsorted' or something to indicate its current status. A state machiene may be viable for tracking changes ond attacting hooks.
   property :section, Text, :lazy => true
   
+  def to_s
+    Psych.dump(self)
+  end
+  
   #before a DObject is saved its appropriate module is conditionaly included.
   before :save do
     if self.type == Article
@@ -200,11 +215,20 @@ class Article < DObject
   property :section, Text
   property :weight, Integer
   property :body, Text
+  property :fingerprint, Text
 
   has n, :embeded_images, :through => Resource
 
   def images
     self.embeded_images
+  end
+
+  def stamp
+    Librarian.hexdigest([self.title, self.body].to_s)
+  end
+  
+  before :save do
+    self.fingerprint = self.stamp
   end
 end
 
@@ -226,7 +250,7 @@ end
 
 DataMapper.finalize.auto_upgrade!
 
-#Binding.pry #unless ENV['RACK_ENV'].to_sym == :test || :production
+Binding.pry #unless ENV['RACK_ENV'].to_sym == :test || :production
 __END__
 
 ## Page Layouts ##
