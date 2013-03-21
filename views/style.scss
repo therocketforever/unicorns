@@ -87,6 +87,9 @@ body{
 //* Desktop *//
 @media screen and (min-device-width: 900px){
   body{
+		margin: auto;
+		width: 70%;
+		max-width: $g8;
     article{
       .article_body{
         margin: 0 0 0 $g0;
