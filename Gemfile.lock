@@ -171,6 +171,7 @@ PLATFORMS
 
 DEPENDENCIES
   capybara
+  coderay
   coffee-script
   cucumber
   data_mapper
