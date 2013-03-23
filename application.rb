@@ -250,7 +250,7 @@ end
 
 DataMapper.finalize.auto_upgrade!
 
-Binding.pry #unless ENV['RACK_ENV'].to_sym == :test || :production
+#Binding.pry #unless ENV['RACK_ENV'].to_sym == :test || :production
 __END__
 
 ## Page Layouts ##
@@ -298,7 +298,7 @@ nav.navigation
 @@footer
 footer
 	small
-		p &copy 2013 Gravity Network Services
+    p © 2013 therocketforever
 //  == slim :analytics
 
 @@index

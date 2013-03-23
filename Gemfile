@@ -14,7 +14,7 @@ gem "slim", "~> 2.0.0.pre.6"
 gem "coffee-script"
 gem "sass", :require => "sass"
 gem "redcarpet", :require => "redcarpet"
-gem "ddate"
+gem 'rack-codehighlighter', :require => 'rack/codehighlighter'
 
 group :test do
   gem "cucumber", :require => "cucumber"

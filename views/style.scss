@@ -3,11 +3,20 @@
 @import "columns";
 @import "intro";
 @import "dejavusansbook";
+@import "coderay";
 
 $bluezilla: #00b2e7;
 $goldntron: #f0c202;
 /*$goldntron: #e0b502;*/
 $textual: #444;
+$codeback: #063d4e;
+$codetext: #0085ab;
+
+@mixin rounded($radius: $gn2) {
+	-webkit-border-radius: $radius;
+	   -moz-border-radius: $radius;
+		      border-radius: $radius;
+}
 
 //* Main Styles *//
 
@@ -55,6 +64,18 @@ body{
 	}
   article{
     max-width: $g8;
+		margin: 0 0 $g4 0;
+		pre.CodeRay{
+			@include rounded;
+			overflow-x: hidden;
+			background-color: $codeback;
+			color: $codetext;
+			
+			max-width: 98%;
+			margin-left: 0;
+			margin-right: auto;
+			padding: $g0;
+		}
   }
   footer{
     text-align: center;
