@@ -10,8 +10,8 @@ $white: #f8f8ff;
 $goldntron: #f0c202;
 /*$goldntron: #e0b502;*/
 $textual: #444;
-$codeback: #063d4e;
-$codetext: #0085ab;
+$codeback: #444;
+$codetext: #c0c0c0;
 
 @mixin rounded($radius: $gn2) {
 	-webkit-border-radius: $radius;
