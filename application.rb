@@ -1,4 +1,8 @@
 ## Website ##
+
+NAME = "Your Name"
+SITE_TITLE = "Awsome Website"
+
 class Application < Sinatra::Base
   
   enable :logging, :inline_templates
@@ -21,14 +25,14 @@ class Application < Sinatra::Base
   helpers do
     def evaluate_path
      @target = case request.path
-        when '/red'
-          :red
-        when '/blue'
-          :blue
-        when '/gold'
-          :gold
+        when '/home'
+          :home
+        when '/blog'
+          :blog
+        when '/contact'
+          :contact
         else
-          :red
+          :home
       end
     end
     
@@ -53,18 +57,18 @@ class Application < Sinatra::Base
     coffee :application
   end
 
-  get "/", "/red", "/blue", "/gold" do
-    @title = "therocketforever"
+  get "/", "/home", "/blog", "/contact" do
+    @title = "#{SITE_TITLE}"
     evaluate_path
 		case @target
-			when :red
-        @articles = paginate(Article.all(:section => "red", :order => :created_at.asc))
-      when :blue
-        @articles = paginate(Article.all(:section => "blue", :order => :updated_at.asc))
-      when :gold
-        @articles = paginate(Article.all(:section => "gold", :order => :weight.asc))
+			when :home
+        @articles = paginate(Article.all(:section => "home", :order => :created_at.asc))
+      when :blog
+        @articles = paginate(Article.all(:section => "blog", :order => :updated_at.asc))
+      when :contact
+        @articles = paginate(Article.all(:section => "contact", :order => :weight.asc))
 			else
-			  @articles = paginate(Article.all(:section => "red", :order => :created_at.asc))
+			  @articles = paginate(Article.all(:section => "home", :order => :created_at.asc))
 		end
     slim :index
   end
@@ -277,11 +281,11 @@ html
 @@header
 header
 	h1.masthead 
-		| I Can Kill You
+		| #{NAME}
 		br 
-		| With My
+		| is now avalable
 		br 
-		| Brain
+		| in hypertext
 	== slim :navigation
 	hr
   
@@ -289,29 +293,29 @@ header
 nav.navigation
 	ul.nav_links
 		li.nav_link
-			a.left.unicode href="/" ⬡
+			a.left.unicode href="/" Home
 		li.nav_link 
-			a.left.deja href="/blue" Noise
+			a.left.deja href="/blog" Weblog
 		li.nav_link 
-			a.left.deja href="/gold" Contact
+			a.left.deja href="/contact" Contact
 
 @@footer
 footer
 	small
-    p © 2013 therocketforever
+    p © 2013 #{NAME}
 //  == slim :analytics
 
 @@index
 .content
 == slim @target
 
-@@red
+@@home
 == slim :articles
 
-@@gold
+@@contact
 == slim :articles
 
-@@blue
+@@blog
 == slim :articles
 
 @@articles
