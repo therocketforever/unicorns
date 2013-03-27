@@ -1,5 +1,5 @@
-# THEROCKETFOREVER  
-## Homepage of DON who is a ghost  
-### Aditionaly, Evil  
-
-http://protected-spire-3246.herokuapp.com
+# SITE-O-TRON  
+## Template for hypertext awsemeness
+**Includeing:** Database backed, plain-text markdown maintained, semanticly seperated, sinatra served, code highlighted fabulosity.  
+Thin for development & optinal UNICORN for production. *rawr* 
+### Aditionaly, Evil
