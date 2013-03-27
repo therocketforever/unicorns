@@ -1,9 +1,12 @@
-:title: With searching comes loss and the presence of absence...
-:section: blue
-:tags: blue, contact, therocketforever
-:weight: 20
+:title: Contact Information
+:section: contact
+:tags: contact, awsometag
+:weight: 0
 ---
-### More Static  
-Obviously I have not written anything of substance to fill this section and now poor reader you are left to wonder what fantastic discoveries go left undescribed. YES! this section will be devoted to research, or rather shareing the findings of my explorations. Some of it will be personal, some of it will be professional. I will try however, to keep it interesting.  
+### Be My BFF
+Edit this file to contain your contact information. Markdown is the way. The string on the `:title:` line will be the H2 title used to identify this article. Articles taged with the `:contact:` section tag will be orderd by the value of the `:weight:` tag. The more the `:weight:` the farther down the page the article will appear.
 
-Words here will be more direct. Altough, given my penchant for abstraction, I make no gaurentees.
+#### And now some filler text...
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras mattis consectetur purus sit amet fermentum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur blandit tempus porttitor.  
+
+Donec id elit non mi porta gravida at eget metus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id dolor id nibh ultricies vehicula ut id elit. Maecenas sed diam eget risus varius blandit sit amet non magna.

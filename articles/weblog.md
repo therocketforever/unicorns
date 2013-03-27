@@ -1,9 +1,17 @@
 :title: With searching comes loss and the presence of absence...
-:section: blue
-:tags: blue, contact, therocketforever
-:weight: 20
+:section: weblog
+:tags: weblog, yetanotherawsometag
+:weight: 0
 ---
-### More Static  
-Obviously I have not written anything of substance to fill this section and now poor reader you are left to wonder what fantastic discoveries go left undescribed. YES! this section will be devoted to research, or rather shareing the findings of my explorations. Some of it will be personal, some of it will be professional. I will try however, to keep it interesting.  
+### This is your weblog.  
+Articles with the `:section:` tag of 'weblog' will be ordered by the **DATE THE ARTICLE WAS LAST UPDATED**. The value of the `:weight:` tag will be ignored for weblog articles. However a value may be set as changeing the `:section:` tag to 'home' or 'contact' will change the section of the site where the article is displayed.
 
-Words here will be more direct. Altough, given my penchant for abstraction, I make no gaurentees.
+#### You should write cool thigs here
+This site can also highlight code. Use standard markdown *(paired backticks for inline code or four spaces of indentation for block code)*. The Syntax highlighter as well as anyother color/style options can me set in the `.scss` files in the `/views` subdirectory.
+
+    :::ruby
+		class Hello
+			def say_hello(name)
+				puts "Hello #{name}!"
+			end 
+		end

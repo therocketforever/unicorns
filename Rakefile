@@ -5,14 +5,14 @@ require 'bundler'
 if ENV['RACK_ENV'].nil? then ENV['RACK_ENV'] = "development" end
 
 case rack_env = ENV['RACK_ENV']
-  when rack_env.to_sym == :development
-    Bundler.require(:default, :development)
+  when rack_env.to_sym == :production
+    Bundler.require(:default, :production)
   when rack_env.to_sym == :test
     Bundler.require(:default, :development, :test)
   when rack_env == nil
     Bundler.require(:default, :development)
   else
-    Bundler.require(:default, :production)
+    Bundler.require(:default, :development)
 end
 
 require File.join(File.dirname(__FILE__), 'application.rb')
